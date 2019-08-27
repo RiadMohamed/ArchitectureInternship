@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[49]:
+# In[1]:
 
 
 import cv2
@@ -11,7 +11,7 @@ from scipy.spatial import distance as dist
 from collections import OrderedDict
 
 
-# In[50]:
+# In[2]:
 
 
 # Class for color detection
@@ -65,21 +65,23 @@ class ColorLabeler:
         return self.colorNames[minDist[1]]
 
 
-# In[51]:
+# In[3]:
 
 
 print_im = plt.imread("Top.jpg")
 plt.imshow(print_im) 
 
 
-# In[52]:
+# In[4]:
 
 
 BGR_image = cv2.imread("Top.jpg")
+width = BGR_image.shape[0]
+height = BGR_image.shape[1]
 cl = ColorLabeler()
 
 
-# In[53]:
+# In[5]:
 
 
 # function for segmentation of cubes
@@ -102,7 +104,7 @@ def mask(image):
     return target
 
 
-# In[54]:
+# In[6]:
 
 
 image = mask(BGR_image)
@@ -113,7 +115,7 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
 
 
-# In[55]:
+# In[66]:
 
 
 # function for final output
@@ -124,22 +126,45 @@ def info(gray_image):
     # find contours in the binary image
     im2, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     for c in contours:
+        cX = 0
+        cY = 0
+        cZ = 0
         # calculate moments for each contour
         M = cv2.moments(c)
-
-        # calculate x,y coordinate of center
-        cX = int(M["m10"] / M["m00"])
-        cY = int(M["m01"] / M["m00"])
+        if(abs(width - height) < 10):
+            # calculate x,y coordinate of center
+            cX = int(M["m10"] / M["m00"])
+            cY = int(M["m01"] / M["m00"])
+            
+        else:
+            # calculate x,z coordinate of center
+            cX = int(M["m10"] / M["m00"])
+            cZ = int(M["m01"] / M["m00"])
+        
+        point = (cX, cY, cZ)
+        col, row = location(point)
         
         color = cl.label(lab, c)
-
-        box = (cX , cY , color)
+        box = (point , color , (col, row))
         boxes.append(box)
         
+    boxes.sort()    
     return boxes
 
 
-# In[56]:
+# In[67]:
+
+
+def location(point):
+    col = int(np.floor(point[0] / 80) + 1)
+    if(point[2] == 0):
+        row = int(np.floor(point[1] / 80) + 1)
+    else:
+        row = int(np.floor(point[2] / 80) + 1)
+    return col, row
+
+
+# In[68]:
 
 
 #final data structure list of tuples

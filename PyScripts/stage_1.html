@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>stage_1</title>
+<title>stage_1.3</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13115,7 +13115,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
@@ -13132,7 +13132,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Class for color detection</span>
@@ -13193,7 +13193,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">print_im</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;Top.jpg&quot;</span><span class="p">)</span>
@@ -13210,13 +13210,13 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[51]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.image.AxesImage at 0x156483ab808&gt;</pre>
+<pre>&lt;matplotlib.image.AxesImage at 0x170644c5b48&gt;</pre>
 </div>
 
 </div>
@@ -13242,10 +13242,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">BGR_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;Top.jpg&quot;</span><span class="p">)</span>
+<span class="n">width</span> <span class="o">=</span> <span class="n">BGR_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">height</span> <span class="o">=</span> <span class="n">BGR_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">cl</span> <span class="o">=</span> <span class="n">ColorLabeler</span><span class="p">()</span>
 </pre></div>
 
@@ -13256,7 +13258,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># function for segmentation of cubes</span>
@@ -13286,7 +13288,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">mask</span><span class="p">(</span><span class="n">BGR_image</span><span class="p">)</span>
@@ -13304,7 +13306,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># function for final output</span>
@@ -13315,18 +13317,29 @@ div#notebook {
     <span class="c1"># find contours in the binary image</span>
     <span class="n">im2</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="n">hierarchy</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">RETR_TREE</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">contours</span><span class="p">:</span>
+        <span class="n">cX</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">cY</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">cZ</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="c1"># calculate moments for each contour</span>
         <span class="n">M</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">moments</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-
-        <span class="c1"># calculate x,y coordinate of center</span>
-        <span class="n">cX</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="s2">&quot;m10&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">M</span><span class="p">[</span><span class="s2">&quot;m00&quot;</span><span class="p">])</span>
-        <span class="n">cY</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="s2">&quot;m01&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">M</span><span class="p">[</span><span class="s2">&quot;m00&quot;</span><span class="p">])</span>
+        <span class="k">if</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">height</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">):</span>
+            <span class="c1"># calculate x,y coordinate of center</span>
+            <span class="n">cX</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="s2">&quot;m10&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">M</span><span class="p">[</span><span class="s2">&quot;m00&quot;</span><span class="p">])</span>
+            <span class="n">cY</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="s2">&quot;m01&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">M</span><span class="p">[</span><span class="s2">&quot;m00&quot;</span><span class="p">])</span>
+            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># calculate x,z coordinate of center</span>
+            <span class="n">cX</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="s2">&quot;m10&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">M</span><span class="p">[</span><span class="s2">&quot;m00&quot;</span><span class="p">])</span>
+            <span class="n">cZ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="s2">&quot;m01&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">M</span><span class="p">[</span><span class="s2">&quot;m00&quot;</span><span class="p">])</span>
+        
+        <span class="n">point</span> <span class="o">=</span> <span class="p">(</span><span class="n">cX</span><span class="p">,</span> <span class="n">cY</span><span class="p">,</span> <span class="n">cZ</span><span class="p">)</span>
+        <span class="n">col</span><span class="p">,</span> <span class="n">row</span> <span class="o">=</span> <span class="n">location</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
         
         <span class="n">color</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">lab</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
-
-        <span class="n">box</span> <span class="o">=</span> <span class="p">(</span><span class="n">cX</span> <span class="p">,</span> <span class="n">cY</span> <span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="p">(</span><span class="n">point</span> <span class="p">,</span> <span class="n">color</span> <span class="p">,</span> <span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
         <span class="n">boxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
         
+    <span class="n">boxes</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>    
     <span class="k">return</span> <span class="n">boxes</span>
 </pre></div>
 
@@ -13337,7 +13350,26 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">location</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">80</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">80</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">80</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#final data structure list of tuples</span>
@@ -13354,28 +13386,28 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[56]:</div>
+    <div class="prompt output_prompt">Out[68]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[(529, 529, &#39;red&#39;),
- (368, 529, &#39;blue&#39;),
- (45, 529, &#39;red&#39;),
- (206, 529, &#39;green&#39;),
- (368, 369, &#39;blue&#39;),
- (206, 369, &#39;red&#39;),
- (529, 369, &#39;green&#39;),
- (45, 369, &#39;green&#39;),
- (368, 208, &#39;red&#39;),
- (45, 208, &#39;red&#39;),
- (529, 208, &#39;blue&#39;),
- (206, 208, &#39;blue&#39;),
- (529, 46, &#39;red&#39;),
- (368, 46, &#39;green&#39;),
- (206, 46, &#39;blue&#39;),
- (45, 46, &#39;green&#39;)]</pre>
+<pre>[((45, 46, 0), &#39;green&#39;, (1, 1)),
+ ((45, 208, 0), &#39;red&#39;, (1, 3)),
+ ((45, 369, 0), &#39;green&#39;, (1, 5)),
+ ((45, 529, 0), &#39;red&#39;, (1, 7)),
+ ((206, 46, 0), &#39;blue&#39;, (3, 1)),
+ ((206, 208, 0), &#39;blue&#39;, (3, 3)),
+ ((206, 369, 0), &#39;red&#39;, (3, 5)),
+ ((206, 529, 0), &#39;green&#39;, (3, 7)),
+ ((368, 46, 0), &#39;green&#39;, (5, 1)),
+ ((368, 208, 0), &#39;red&#39;, (5, 3)),
+ ((368, 369, 0), &#39;blue&#39;, (5, 5)),
+ ((368, 529, 0), &#39;blue&#39;, (5, 7)),
+ ((529, 46, 0), &#39;red&#39;, (7, 1)),
+ ((529, 208, 0), &#39;blue&#39;, (7, 3)),
+ ((529, 369, 0), &#39;green&#39;, (7, 5)),
+ ((529, 529, 0), &#39;red&#39;, (7, 7))]</pre>
 </div>
 
 </div>
