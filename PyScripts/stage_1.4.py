@@ -115,44 +115,19 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
 
 
-# In[66]:
+# In[7]:
 
 
-# function for final output
-def info(gray_image):
-    boxes = []
-    # convert the grayscale image to binary image
-    ret,thresh = cv2.threshold(gray_image,10,255,0)
-    # find contours in the binary image
-    im2, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-    for c in contours:
-        cX = 0
-        cY = 0
-        cZ = 0
-        # calculate moments for each contour
-        M = cv2.moments(c)
-        if(abs(width - height) < 10):
-            # calculate x,y coordinate of center
-            cX = int(M["m10"] / M["m00"])
-            cY = int(M["m01"] / M["m00"])
-            
-        else:
-            # calculate x,z coordinate of center
-            cX = int(M["m10"] / M["m00"])
-            cZ = int(M["m01"] / M["m00"])
-        
-        point = (cX, cY, cZ)
-        col, row = location(point)
-        
-        color = cl.label(lab, c)
-        box = (point , color , (col, row))
-        boxes.append(box)
-        
-    boxes.sort()    
-    return boxes
+def data(color):
+    if(color is 'red'):
+        return 'Bedroom'
+    elif(color is 'green'):
+        return 'Sitting room'
+    elif(color is 'blue'):
+        return 'Kitchen'
 
 
-# In[67]:
+# In[8]:
 
 
 def location(point):
@@ -164,11 +139,59 @@ def location(point):
     return col, row
 
 
-# In[68]:
+# In[9]:
+
+
+# function for final output
+def info(gray_image):
+    boxes = []
+    ID = 0
+    # convert the grayscale image to binary image
+    ret,thresh = cv2.threshold(gray_image,10,255,0)
+    # find contours in the binary image
+    im2, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    for c in contours:
+        cX = 0
+        cY = 0
+        cZ = 0
+        # calculate moments for each contour
+        M = cv2.moments(c)
+        if(abs(width - height) < 10):
+            if M["m00"] != 0:
+                # calculate x,y coordinate of center
+                cX = int(M["m10"] / M["m00"])
+                cY = int(M["m01"] / M["m00"])
+            
+        else:
+            if M["m00"] != 0:
+                # calculate x,z coordinate of center
+                cX = int(M["m10"] / M["m00"])
+                cZ = int(M["m01"] / M["m00"])
+        
+        point = (cX, cY, cZ)
+        col, row = location(point)
+        ID += 1
+        
+        color = cl.label(lab, c)
+        place = data(color)
+        box = (ID, point , color , (col, row), place)
+        boxes.append(box)
+        
+    boxes.sort()    
+    return boxes
+
+
+# In[10]:
 
 
 #final data structure list of tuples
 info(gray)
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
