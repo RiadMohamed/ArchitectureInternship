@@ -65,23 +65,23 @@ class ColorLabeler:
         return self.colorNames[minDist[1]]
 
 
-# In[3]:
+# In[15]:
 
 
-print_im = plt.imread("Top.jpg")
+print_im = plt.imread("Side_3_RedRed.jpg")
 plt.imshow(print_im) 
 
 
-# In[4]:
+# In[16]:
 
 
-BGR_image = cv2.imread("Top.jpg")
-width = BGR_image.shape[0]
-height = BGR_image.shape[1]
+BGR_image = cv2.imread("Side_3_RedRed.jpg")
+height = BGR_image.shape[0]
+width = BGR_image.shape[1]
 cl = ColorLabeler()
 
 
-# In[5]:
+# In[17]:
 
 
 # function for segmentation of cubes
@@ -104,7 +104,7 @@ def mask(image):
     return target
 
 
-# In[6]:
+# In[18]:
 
 
 image = mask(BGR_image)
@@ -115,37 +115,12 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
 
 
-# In[7]:
-
-
-def data(color):
-    if(color is 'red'):
-        return 'Bedroom'
-    elif(color is 'green'):
-        return 'Sitting room'
-    elif(color is 'blue'):
-        return 'Kitchen'
-
-
-# In[8]:
-
-
-def location(point):
-    col = int(np.floor(point[0] / 80) + 1)
-    if(point[2] == 0):
-        row = int(np.floor(point[1] / 80) + 1)
-    else:
-        row = int(np.floor(point[2] / 80) + 1)
-    return col, row
-
-
-# In[9]:
+# In[19]:
 
 
 # function for final output
 def info(gray_image):
     boxes = []
-    ID = 0
     # convert the grayscale image to binary image
     ret,thresh = cv2.threshold(gray_image,10,255,0)
     # find contours in the binary image
@@ -156,32 +131,26 @@ def info(gray_image):
         cZ = 0
         # calculate moments for each contour
         M = cv2.moments(c)
+
         if(abs(width - height) < 10):
-            if M["m00"] != 0:
-                # calculate x,y coordinate of center
-                cX = int(M["m10"] / M["m00"])
-                cY = int(M["m01"] / M["m00"])
-            
+            # calculate x,y coordinate of center
+            cX = int(M["m10"] / M["m00"])
+            cY = int(M["m01"] / M["m00"])
         else:
-            if M["m00"] != 0:
-                # calculate x,z coordinate of center
-                cX = int(M["m10"] / M["m00"])
-                cZ = int(M["m01"] / M["m00"])
-        
-        point = (cX, cY, cZ)
-        col, row = location(point)
-        ID += 1
-        
+            # calculate x,z coordinate of center
+            cX = int(M["m10"] / M["m00"])
+            cZ = int(M["m01"] / M["m00"])
+            
         color = cl.label(lab, c)
-        place = data(color)
-        box = (ID, point , color , (col, row), place)
+
+        box = ((cX, cY, cZ) , color)
         boxes.append(box)
         
     boxes.sort()    
     return boxes
 
 
-# In[10]:
+# In[20]:
 
 
 #final data structure list of tuples
